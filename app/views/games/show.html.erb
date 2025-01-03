@@ -1,0 +1,22 @@
+<h1>Game <%= @game.id %></h1>
+<div>
+  <% @game.board.each_with_index do |cell, index| %>
+    <% if (index % 3).zero? %>
+      <div style="clear: both;"></div>
+    <% end %>
+    <div style="float: left; width: 30px; height: 30px; border: 1px solid black; text-align: center;">
+      <% if cell == " " %>
+        <%= link_to ' ', game_path(@game, position: index), method: :patch %>
+      <% else %>
+        <%= cell %>
+      <% end %>
+    </div>
+  <% end %>
+</div>
+<div style="clear: both;"></div>
+<% if @game.winner? %>
+  <p><%= @game.current_player == "X" ? "O" : "X" %> wins!</p>
+<% elsif @game.full_board? %>
+  <p>It's a draw!</p>
+<% end %>
+<%= link_to 'Back to Games', games_path %>
